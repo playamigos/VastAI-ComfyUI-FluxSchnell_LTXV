@@ -1,0 +1,457 @@
+{
+  "6": {
+    "inputs": {
+      "text": "",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": "blur, defocus, low quality, worst quality, deformed, distorted, disfigured, motion smear, motion artifacts, glitches, disappear, fused fingers, bad anatomy, weird hand, ugly, talking, voice, lip movement",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      },
+      "clip": [
+        "38",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "38": {
+    "inputs": {
+      "clip_name": "t5xxl_fp16.safetensors",
+      "type": "ltxv",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "44": {
+    "inputs": {
+      "ckpt_name": "ltxv-13b-0.9.7-distilled-fp8.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "73": {
+    "inputs": {
+      "sampler_name": "euler_ancestral"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "1206": {
+    "inputs": {
+      "image": "enhanced1_resized.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "1241": {
+    "inputs": {
+      "frame_rate": 24.000000000000004,
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning"
+    }
+  },
+  "1338": {
+    "inputs": {
+      "width": 768,
+      "height": 448,
+      "num_frames": 121,
+      "optional_cond_indices": "0",
+      "strength": 0.8,
+      "crop": "center",
+      "crf": 30,
+      "blur": 1,
+      "model": [
+        "44",
+        0
+      ],
+      "vae": [
+        "44",
+        2
+      ],
+      "guider": [
+        "1887",
+        0
+      ],
+      "sampler": [
+        "73",
+        0
+      ],
+      "sigmas": [
+        "1876",
+        0
+      ],
+      "noise": [
+        "1507",
+        0
+      ],
+      "optional_cond_images": [
+        "1206",
+        0
+      ]
+    },
+    "class_type": "LTXVBaseSampler",
+    "_meta": {
+      "title": "🅛🅣🅧 LTXV Base Sampler"
+    }
+  },
+  "1507": {
+    "inputs": {
+      "noise_seed": 21351
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "1593": {
+    "inputs": {
+      "factor": 0.25,
+      "latents": [
+        "1691",
+        0
+      ],
+      "reference": [
+        "1338",
+        0
+      ]
+    },
+    "class_type": "LTXVAdainLatent",
+    "_meta": {
+      "title": "🅛🅣🅧 LTXV Adain Latent"
+    }
+  },
+  "1598": {
+    "inputs": {
+      "noise_seed": 1252
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "1599": {
+    "inputs": {
+      "frame_rate": 24,
+      "loop_count": 0,
+      "filename_prefix": "ltxv-hd",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 18,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "1661",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Video Combine 🎥🅥🅗🅢"
+    }
+  },
+  "1601": {
+    "inputs": {
+      "tile_size": 640,
+      "overlap": 64,
+      "temporal_size": 64,
+      "temporal_overlap": 16,
+      "samples": [
+        "1894",
+        0
+      ],
+      "vae": [
+        "44",
+        2
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "VAE Decode (Tiled)"
+    }
+  },
+  "1661": {
+    "inputs": {
+      "width": 1920,
+      "height": 1080,
+      "upscale_method": "bicubic",
+      "keep_proportion": true,
+      "divisible_by": 2,
+      "crop": "center",
+      "image": [
+        "1601",
+        0
+      ]
+    },
+    "class_type": "ImageResizeKJ",
+    "_meta": {
+      "title": "Resize Image (deprecated)"
+    }
+  },
+  "1691": {
+    "inputs": {
+      "samples": [
+        "1338",
+        0
+      ],
+      "upscale_model": [
+        "1828",
+        0
+      ],
+      "vae": [
+        "44",
+        2
+      ]
+    },
+    "class_type": "LTXVLatentUpsampler",
+    "_meta": {
+      "title": "🅛🅣🅧 LTXV Latent Upsampler"
+    }
+  },
+  "1813": {
+    "inputs": {
+      "skip_steps_sigma_threshold": 0.9970000000000002,
+      "cfg_star_rescale": true,
+      "sigmas": "1",
+      "cfg_values": "1",
+      "stg_scale_values": "0",
+      "stg_rescale_values": "1",
+      "stg_layers_indices": "[42]",
+      "model": [
+        "44",
+        0
+      ],
+      "positive": [
+        "1241",
+        0
+      ],
+      "negative": [
+        "1241",
+        1
+      ]
+    },
+    "class_type": "STGGuiderAdvanced",
+    "_meta": {
+      "title": "🅛🅣🅧 STG Guider Advanced"
+    }
+  },
+  "1828": {
+    "inputs": {
+      "upscale_model": "ltxv-spatial-upscaler-0.9.7.safetensors",
+      "spatial_upsample": true,
+      "temporal_upsample": false
+    },
+    "class_type": "LTXVLatentUpsamplerModelLoader",
+    "_meta": {
+      "title": "🅛🅣🅧 LTXV Latent Upsampler Model Loader"
+    }
+  },
+  "1875": {
+    "inputs": {
+      "string": "1.0000, 0.9937, 0.9875, 0.9812, 0.9750, 0.9094, 0.7250, 0.4219, 0.0",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "StringToFloatList",
+    "_meta": {
+      "title": "String to Float List"
+    }
+  },
+  "1876": {
+    "inputs": {
+      "float_list": [
+        "1875",
+        0
+      ]
+    },
+    "class_type": "FloatToSigmas",
+    "_meta": {
+      "title": "Float To Sigmas"
+    }
+  },
+  "1887": {
+    "inputs": {
+      "skip_steps_sigma_threshold": 0.9970000000000002,
+      "cfg_star_rescale": true,
+      "sigmas": "1.0, 0.9933, 0.9850, 0.9767, 0.9008, 0.6180",
+      "cfg_values": "1,1,1,1,1,1",
+      "stg_scale_values": "0,0,0,0,0,0",
+      "stg_rescale_values": "1, 1, 1, 1, 1, 1",
+      "stg_layers_indices": "[25], [35], [35], [42], [42], [42]",
+      "model": [
+        "44",
+        0
+      ],
+      "positive": [
+        "1241",
+        0
+      ],
+      "negative": [
+        "1241",
+        1
+      ]
+    },
+    "class_type": "STGGuiderAdvanced",
+    "_meta": {
+      "title": "🅛🅣🅧 STG Guider Advanced"
+    }
+  },
+  "1888": {
+    "inputs": {
+      "string": "0.85, 0.7250, 0.6, 0.4219, 0.0",
+      "speak_and_recognation": {
+        "__value__": [
+          false,
+          true
+        ]
+      }
+    },
+    "class_type": "StringToFloatList",
+    "_meta": {
+      "title": "String to Float List"
+    }
+  },
+  "1889": {
+    "inputs": {
+      "float_list": [
+        "1888",
+        0
+      ]
+    },
+    "class_type": "FloatToSigmas",
+    "_meta": {
+      "title": "Float To Sigmas"
+    }
+  },
+  "1890": {
+    "inputs": {
+      "horizontal_tiles": 1,
+      "vertical_tiles": 1,
+      "overlap": 1,
+      "latents_cond_strength": 0.15,
+      "boost_latent_similarity": false,
+      "crop": "center",
+      "optional_cond_indices": "0",
+      "images_cond_strengths": "0.9",
+      "model": [
+        "44",
+        0
+      ],
+      "vae": [
+        "44",
+        2
+      ],
+      "noise": [
+        "1598",
+        0
+      ],
+      "sampler": [
+        "73",
+        0
+      ],
+      "sigmas": [
+        "1889",
+        0
+      ],
+      "guider": [
+        "1813",
+        0
+      ],
+      "latents": [
+        "1593",
+        0
+      ],
+      "optional_cond_images": [
+        "1206",
+        0
+      ]
+    },
+    "class_type": "LTXVTiledSampler",
+    "_meta": {
+      "title": "🅛🅣🅧 LTXV Tiled Sampler"
+    }
+  },
+  "1893": {
+    "inputs": {
+      "anything": [
+        "1338",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  },
+  "1894": {
+    "inputs": {
+      "anything": [
+        "1890",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  },
+  "1896": {
+    "inputs": {
+      "anything": [
+        "1599",
+        0
+      ]
+    },
+    "class_type": "easy cleanGpuUsed",
+    "_meta": {
+      "title": "Clean VRAM Used"
+    }
+  }
+}
