@@ -26,8 +26,10 @@ NODES=(
 )
 
 WORKFLOWS=(
-    "https://raw.githubusercontent.com/vast-ai/base-image/refs/heads/comfyui-ltxvideo-provisioning/derivatives/pytorch/derivatives/comfyui/workflows/ltx-video-i2v-simple.json"
-    "https://raw.githubusercontent.com/vast-ai/base-image/refs/heads/comfyui-ltxvideo-provisioning/derivatives/pytorch/derivatives/comfyui/workflows/ltx-video-t2v-simple.json"
+    "https://raw.githubusercontent.com/playamigos/VastAI-ComfyUI-FluxSchnell_LTXV/refs/heads/main/Flux_lora_workflow.json"
+    "https://raw.githubusercontent.com/playamigos/VastAI-ComfyUI-FluxSchnell_LTXV/refs/heads/main/Flux_workflow.json"
+    "https://raw.githubusercontent.com/playamigos/VastAI-ComfyUI-FluxSchnell_LTXV/refs/heads/main/ltxv-fast.json"
+    "https://raw.githubusercontent.com/playamigos/VastAI-ComfyUI-FluxSchnell_LTXV/refs/heads/main/ltxv-hd.json"
 )
 
 INPUT=(
